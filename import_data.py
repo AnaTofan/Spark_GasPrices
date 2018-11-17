@@ -7,8 +7,20 @@ sc.setLogLevel("OFF")
 
 sql_sc = pyspark.SQLContext(sc)
 
-prices2014_df = (sql_sc
+
+def get_data_from_file(file_path, sql_sc):
+    data_df = (sql_sc
              .read.option('header', 'false')
              .option('sep', ';')
              .option('inferSchema', 'true')
-             .csv('gas_data/Prix2014.csv'))
+             .csv(file_path))
+    return data_df
+
+
+prix2014_df = get_data_from_file("gas_data/Prix2014.csv", sql_sc)
+prix2015_df = get_data_from_file("gas_data/Prix2015.csv", sql_sc)
+prix2016_df = get_data_from_file("gas_data/Prix2016.csv", sql_sc)
+prix2017_df = get_data_from_file("gas_data/Prix2017.csv", sql_sc)
+
+services_df = get_data_from_file("gas_data/Services2017.csv", sql_sc)
+stations_df = get_data_from_file("gas_data/Services2017.csv", sql_sc)
